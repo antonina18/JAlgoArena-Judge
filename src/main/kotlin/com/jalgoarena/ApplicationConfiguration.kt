@@ -21,7 +21,6 @@ import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 
 @Configuration
-@EnableSwagger2
 open class ApplicationConfiguration {
 
     @Bean
@@ -50,12 +49,4 @@ open class ApplicationConfiguration {
             KotlinCompiler()
     )
 
-    @Bean
-    open fun api(): Docket {
-        return Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build()
-    }
 }
