@@ -7,13 +7,17 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.jalgoarena.codegeneration.JavaCodeGenerator
 import com.jalgoarena.codegeneration.JvmCodeGenerator
 import com.jalgoarena.codegeneration.KotlinCodeGenerator
+import com.jalgoarena.compile.InMemoryJavaCompiler
 import com.jalgoarena.compile.JvmCompiler
 import com.jalgoarena.compile.KotlinCompiler
-import com.jalgoarena.compile.InMemoryJavaCompiler
 import com.jalgoarena.type.ListNode
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.client.RestTemplate
+import springfox.documentation.builders.PathSelectors
+import springfox.documentation.builders.RequestHandlerSelectors
+import springfox.documentation.spi.DocumentationType
+import springfox.documentation.spring.web.plugins.Docket
 
 @Configuration
 open class ApplicationConfiguration {
@@ -43,4 +47,14 @@ open class ApplicationConfiguration {
             InMemoryJavaCompiler(),
             KotlinCompiler()
     )
+
+    @Bean
+    open fun api(): Docket {
+        return Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build()
+    }
+
 }
